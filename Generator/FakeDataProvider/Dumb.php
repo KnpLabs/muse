@@ -25,4 +25,11 @@ class Dumb implements FakeDataProvider
     {
         return true;
     }
+
+    public function getEnum(array $enum)
+    {
+        if (isset($enum[0])) {
+            return $enum[0];
+        }
+    }
 }

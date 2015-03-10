@@ -25,6 +25,10 @@ class JsonSchemaV4Generator implements Generator
 
     private function getRandomData($definition)
     {
+        if (isset($definition['enum'])) {
+            return $this->provider->getEnum($definition['enum']);
+        }
+
         switch ($definition['type']) {
             case 'string':
                 return $this->provider->getString();

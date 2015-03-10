@@ -140,4 +140,19 @@ class JsonSchemaV4GeneratorSpec extends ObjectBehavior
             ]
         ]);
     }
+
+    function it_picks_a_fake_element_from_enum($provider)
+    {
+        $schema = [
+            'properties' => [
+                'type' => [
+                    'enum' => ['foo', 'bar']
+                ]
+            ],
+        ];
+
+        $provider->getEnum(['foo', 'bar'])->willReturn('foo');
+
+        $this->generate($schema)->shouldReturn(['type' => 'foo']);
+    }
 }

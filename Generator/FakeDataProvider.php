@@ -11,4 +11,6 @@ interface FakeDataProvider
     public function getString();
 
     public function getBoolean();
+
+    public function getEnum(array $enum);
 }

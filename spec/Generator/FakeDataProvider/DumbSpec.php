@@ -31,4 +31,9 @@ class DumbSpec extends ObjectBehavior
     {
         $this->getBoolean()->shouldBeBoolean();
     }
+
+    function it_picks_first_element_of_enum()
+    {
+        $this->getEnum(['foo', 'bar'])->shouldReturn('foo');
+    }
 }
