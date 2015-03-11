@@ -2,24 +2,49 @@
 
 namespace Muse;
 
+use Muse\Exception\InvalidArgumentException;
+
 class Muse
 {
     protected $loader;
     protected $generator;
 
-    public function __construct(Loader $loader, Generator $generator)
+    public function __construct(Generator $generator)
     {
-        $this->loader = $loader;
         $this->generator = $generator;
     }
 
     public function inspire($resource)
     {
-        $data = $this->loader->load($resource);
-        $data = $this->generator->generate(
-            json_decode($data, true)
-        );
+        $data = json_decode($resource, true);
+        if (JSON_ERROR_NONE !== $lastError = json_last_error()) {
+            throw new InvalidArgumentException($this->getLastJsonError($lastError));
+        }
 
-        return json_encode($data);
+        if (!is_array($data)) {
+            throw new InvalidArgumentException('JSON must contain an object');
+        }
+
+        return json_encode($this->generator->generate($data));
+    }
+
+    private function getLastJsonError($lastError)
+    {
+        switch ($lastError) {
+            case JSON_ERROR_NONE:
+                return 'No errors';
+            case JSON_ERROR_DEPTH:
+                return 'Maximum stack depth exceeded';
+            case JSON_ERROR_STATE_MISMATCH:
+                return 'Underflow or the modes mismatch';
+            case JSON_ERROR_CTRL_CHAR:
+                return 'Unexpected control character found';
+            case JSON_ERROR_SYNTAX:
+                return 'Syntax error, malformed JSON';
+            case JSON_ERROR_UTF8:
+                return 'Malformed UTF-8 characters, possibly incorrectly encoded';
+            default:
+                return 'Unknown error';
+        }
     }
 }
