@@ -15,6 +15,10 @@ class JsonSchemaV4Generator implements Generator
 
     public function generate(array $schema)
     {
+        if ('object' !== $schema['type']) {
+            return $this->getRandomData($schema);
+        }
+
         $data = [];
         foreach ($schema['properties'] as $property => $definition) {
             $data[$property] = $this->getRandomData($definition);
