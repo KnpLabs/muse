@@ -16,6 +16,7 @@ class JsonSchemaV4GeneratorSpec extends ObjectBehavior
     function it_creates_fake_string_for_string_property($provider)
     {
         $schema = [
+            'type' => 'object',
             'properties' => [
                 'name' => [
                     'type' => 'string',
@@ -31,6 +32,7 @@ class JsonSchemaV4GeneratorSpec extends ObjectBehavior
     function it_creates_fake_integer_for_integer_property($provider)
     {
         $schema = [
+            'type' => 'object',
             'properties' => [
                 'id' => [
                     'type' => 'integer',
@@ -46,6 +48,7 @@ class JsonSchemaV4GeneratorSpec extends ObjectBehavior
     function it_creates_fake_boolean_for_boolean_property($provider)
     {
         $schema = [
+            'type' => 'object',
             'properties' => [
                 'active' => [
                     'type' => 'boolean',
@@ -61,6 +64,7 @@ class JsonSchemaV4GeneratorSpec extends ObjectBehavior
     function it_creates_fake_float_for_number_property($provider)
     {
         $schema = [
+            'type' => 'object',
             'properties' => [
                 'price' => [
                     'type' => 'number',
@@ -76,6 +80,7 @@ class JsonSchemaV4GeneratorSpec extends ObjectBehavior
     function it_creates_array_of_fake_data_for_array_property($provider)
     {
         $schema = [
+            'type' => 'object',
             'properties' => [
                 'tags' => [
                     'type' => 'array',
@@ -141,9 +146,72 @@ class JsonSchemaV4GeneratorSpec extends ObjectBehavior
         ]);
     }
 
+    function it_creates_collection_of_fake_items_for_array_type($provider)
+    {
+        $schema = [
+            'type' => 'array',
+            'items' => [
+                'type' => 'object',
+                'properties' => [
+                    'id' => [
+                        'type' => 'integer',
+                    ],
+                    'name' => [
+                        'type' => 'string',
+                    ],
+                    'active' => [
+                        'type' => 'boolean',
+                    ],
+                    'price' => [
+                        'type' => 'number',
+                    ],
+                ]
+            ]
+        ];
+
+        $provider->getInteger()->willReturn(1337);
+        $provider->getString()->willReturn('random-name');
+        $provider->getBoolean()->willReturn(false);
+        $provider->getFloat()->willReturn(3.51);
+
+        $this->generate($schema)->shouldReturn([
+            [
+                'id' => 1337,
+                'name' => 'random-name',
+                'active' => false,
+                'price' => 3.51,
+            ],
+            [
+                'id' => 1337,
+                'name' => 'random-name',
+                'active' => false,
+                'price' => 3.51,
+            ],
+            [
+                'id' => 1337,
+                'name' => 'random-name',
+                'active' => false,
+                'price' => 3.51,
+            ],
+            [
+                'id' => 1337,
+                'name' => 'random-name',
+                'active' => false,
+                'price' => 3.51,
+            ],
+            [
+                'id' => 1337,
+                'name' => 'random-name',
+                'active' => false,
+                'price' => 3.51,
+            ],
+        ]);
+    }
+
     function it_picks_a_fake_element_from_enum($provider)
     {
         $schema = [
+            'type' => 'object',
             'properties' => [
                 'type' => [
                     'enum' => ['foo', 'bar']
