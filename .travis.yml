@@ -7,11 +7,6 @@ branches:
     only:
         - master
 
-cache:
-    directories:
-        - vendor
-        - bin
-
 before_script:
     - composer install --prefer-source
 
