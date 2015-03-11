@@ -1,8 +1,5 @@
 {
     "name": "knplabs/muse",
-    "require-dev": {
-        "phpspec/phpspec": "~2.1"
-    },
     "license": "MIT",
     "authors": [
         {
@@ -10,11 +7,19 @@
             "email": "gildas.quemener@gmail.com"
         }
     ],
-    "require": { },
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "~2.1"
+    },
     "autoload": {
         "psr-4": {
             "Muse\\": "",
             "spec\\Muse\\": "spec/"
         }
+    },
+    "config": {
+        "bin-dir": "bin"
     }
 }
