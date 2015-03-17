@@ -6,17 +6,17 @@ use Muse\Generator\FakeDataProvider;
 
 class Dumb implements FakeDataProvider
 {
-    public function getInteger()
+    public function getInteger($minimum)
     {
         return 1;
     }
 
-    public function getFloat()
+    public function getFloat($minimum)
     {
         return 1.0;
     }
 
-    public function getString()
+    public function getString($maxLength)
     {
         return 'foo';
     }

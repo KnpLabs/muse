@@ -4,11 +4,11 @@ namespace Muse\Generator;
 
 interface FakeDataProvider
 {
-    public function getInteger();
+    public function getInteger($minimum);
 
-    public function getFloat();
+    public function getFloat($minimum);
 
-    public function getString();
+    public function getString($maxLength);
 
     public function getBoolean();
 

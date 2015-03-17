@@ -20,11 +20,12 @@ class JsonSchemaV4GeneratorSpec extends ObjectBehavior
             'properties' => [
                 'name' => [
                     'type' => 'string',
+                    'maxLength' => 1337
                 ],
             ],
         ];
 
-        $provider->getString()->willReturn('random-name');
+        $provider->getString(1337)->willReturn('random-name');
 
         $this->generate($schema)->shouldReturn(['name' => 'random-name']);
     }
@@ -36,11 +37,12 @@ class JsonSchemaV4GeneratorSpec extends ObjectBehavior
             'properties' => [
                 'id' => [
                     'type' => 'integer',
+                    'minimum' => 4
                 ],
             ],
         ];
 
-        $provider->getInteger()->willReturn(1337);
+        $provider->getInteger(4)->willReturn(1337);
 
         $this->generate($schema)->shouldReturn(['id' => 1337]);
     }
@@ -68,11 +70,12 @@ class JsonSchemaV4GeneratorSpec extends ObjectBehavior
             'properties' => [
                 'price' => [
                     'type' => 'number',
+                    'minimum' => 12
                 ],
             ],
         ];
 
-        $provider->getFloat()->willReturn(3.51);
+        $provider->getFloat(12)->willReturn(3.51);
 
         $this->generate($schema)->shouldReturn(['price' => 3.51]);
     }
@@ -105,10 +108,10 @@ class JsonSchemaV4GeneratorSpec extends ObjectBehavior
             ],
         ];
 
-        $provider->getInteger()->willReturn(1337);
-        $provider->getString()->willReturn('random-name');
+        $provider->getInteger(0)->willReturn(1337);
+        $provider->getString(255)->willReturn('random-name');
         $provider->getBoolean()->willReturn(false);
-        $provider->getFloat()->willReturn(3.51);
+        $provider->getFloat(0)->willReturn(3.51);
 
         $this->generate($schema)->shouldReturn([
             'tags' => [
@@ -169,10 +172,10 @@ class JsonSchemaV4GeneratorSpec extends ObjectBehavior
             ]
         ];
 
-        $provider->getInteger()->willReturn(1337);
-        $provider->getString()->willReturn('random-name');
+        $provider->getInteger(0)->willReturn(1337);
+        $provider->getString(255)->willReturn('random-name');
         $provider->getBoolean()->willReturn(false);
-        $provider->getFloat()->willReturn(3.51);
+        $provider->getFloat(0)->willReturn(3.51);
 
         $this->generate($schema)->shouldReturn([
             [
@@ -222,5 +225,36 @@ class JsonSchemaV4GeneratorSpec extends ObjectBehavior
         $provider->getEnum(['foo', 'bar'])->willReturn('foo');
 
         $this->generate($schema)->shouldReturn(['type' => 'foo']);
+    }
+
+    function it_generate_values_with_default_parameters($provider)
+    {
+        $schema = [
+            'type' => 'array',
+            'items' => [
+                'type' => 'object',
+                'properties' => [
+                    'id' => [
+                        'type' => 'integer',
+                    ],
+                    'name' => [
+                        'type' => 'string',
+                    ],
+                    'active' => [
+                        'type' => 'boolean',
+                    ],
+                    'price' => [
+                        'type' => 'number',
+                    ],
+                ]
+            ]
+        ];
+
+        $provider->getInteger(0)->shouldBeCalled();
+        $provider->getString(255)->shouldBeCalled();
+        $provider->getBoolean()->shouldBeCalled();
+        $provider->getFloat(0)->shouldBeCalled();
+
+        $this->generate($schema);
     }
 }

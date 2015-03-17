@@ -5,7 +5,7 @@ namespace spec\Muse\Generator\FakeDataProvider;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class RandomSpec extends ObjectBehavior
+class FakerSpec extends ObjectBehavior
 {
     function it_is_a_fake_data_provider()
     {
@@ -24,7 +24,7 @@ class RandomSpec extends ObjectBehavior
 
     function it_generate_some_string()
     {
-        $this->getString(100)->shouldBeString();
+        $this->getString(255)->shouldBeString();
     }
 
     function it_generate_some_boolean()
@@ -32,7 +32,7 @@ class RandomSpec extends ObjectBehavior
         $this->getBoolean()->shouldBeBoolean();
     }
 
-    function it_picks_one_element_of_enum()
+    function it_picks_first_element_of_enum()
     {
         $this->getEnum(['foo', 'bar'])->shouldReturnOneOf(['foo', 'bar']);
     }

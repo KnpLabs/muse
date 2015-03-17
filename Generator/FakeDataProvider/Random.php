@@ -6,17 +6,17 @@ use Muse\Generator\FakeDataProvider;
 
 class Random implements FakeDataProvider
 {
-    public function getInteger()
+    public function getInteger($minimum)
     {
         return mt_rand();
     }
 
-    public function getFloat()
+    public function getFloat($minimum)
     {
         return mt_rand() / mt_getrandmax() * 100;
     }
 
-    public function getString()
+    public function getString($maxLength)
     {
         return base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
     }

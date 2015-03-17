@@ -14,17 +14,17 @@ class DumbSpec extends ObjectBehavior
 
     function it_generate_some_integer()
     {
-        $this->getInteger()->shouldBeInteger();
+        $this->getInteger(1)->shouldBeInteger();
     }
 
     function it_generate_some_float()
     {
-        $this->getFloat()->shouldBeFloat();
+        $this->getFloat(0)->shouldBeFloat();
     }
 
     function it_generate_some_string()
     {
-        $this->getString()->shouldBeString();
+        $this->getString(255)->shouldBeString();
     }
 
     function it_generate_some_boolean()
