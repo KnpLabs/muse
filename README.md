@@ -1,7 +1,7 @@
 # Muse
 [![Build Status](https://travis-ci.org/KnpLabs/muse.svg)](https://travis-ci.org/KnpLabs/muse)
 
-The Muse inspires itself from a [JSON Schema](http://json-schema.oirg/) (only wth JSON Schema v4 for now) to generate a valid JSON.
+The Muse inspires itself from a [JSON Schema](http://json-schema.org/) (only wth JSON Schema v4 for now) to generate a valid JSON.
 
 ## Usage
 
