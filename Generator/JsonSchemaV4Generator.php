@@ -25,6 +25,13 @@ class JsonSchemaV4Generator implements Generator
             return $this->getRandomData($schema);
         }
 
+        foreach ($schema['properties'] as $property => $definition) {
+            if (isset($definition['$ref'])) {
+                $ref = substr($definition['$ref'], 14);
+                $schema['properties'][$property] = $schema['definitions'][$ref];
+            }
+        }
+
         $data = [];
         foreach ($schema['properties'] as $property => $definition) {
             $data[$property] = $this->getRandomData($definition);
@@ -40,8 +47,6 @@ class JsonSchemaV4Generator implements Generator
         }
 
         $type = $definition['type'];
-        unset($definition['type']);
-
         $options = array_replace($this->options, $definition);
 
         switch ($type) {
@@ -64,6 +69,9 @@ class JsonSchemaV4Generator implements Generator
                 }
 
                 return $data;
+
+            case 'object':
+                return $this->generate($definition);
         }
     }
 }
