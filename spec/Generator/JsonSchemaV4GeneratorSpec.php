@@ -257,4 +257,39 @@ class JsonSchemaV4GeneratorSpec extends ObjectBehavior
 
         $this->generate($schema);
     }
+
+    function it_generate_fake_referenced_values($provider)
+    {
+        $schema = [
+            'type' => 'object',
+            'definitions' => [
+                'address' => [
+                    'type' => 'object',
+                    'properties' => [
+                        'number' => [
+                            'type' => 'integer',
+                        ],
+                        'streetName' => [
+                            'type' => 'string',
+                        ]
+                    ],
+                ],
+            ],
+            'properties' => [
+                'home' => [
+                    '$ref' => '#/definitions/address',
+                ],
+            ],
+        ];
+
+        $provider->getInteger(0)->willReturn(42);
+        $provider->getString(255)->willReturn('Calle Alemania');
+
+        $this->generate($schema)->shouldReturn([
+            'home' => [
+                'number' => 42,
+                'streetName' => 'Calle Alemania',
+            ],
+        ]);
+    }
 }

@@ -1,0 +1,4 @@
+suites:
+    muse_suite:
+        namespace: Muse\
+        psr4_prefix: Muse\
