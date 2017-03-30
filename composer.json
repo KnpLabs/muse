@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Muse\\": "",
+            "Muse\\": "src/",
             "spec\\Muse\\": "spec/"
         }
     },
