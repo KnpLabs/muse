@@ -1,4 +1,1 @@
-suites:
-    muse_suite:
-        namespace: Muse\
-        psr4_prefix: Muse\
+composer_suite_detection: true
