@@ -37,7 +37,7 @@ class FakerSpec extends ObjectBehavior
         $this->getEnum(['foo', 'bar'])->shouldReturnOneOf(['foo', 'bar']);
     }
 
-    public function getMatchers()
+    public function getMatchers(): array
     {
         return [
             'returnOneOf' => function ($subject, $key) {
